@@ -1,0 +1,37 @@
+name: Jekyll Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.6 # 可以选择适合的 Ruby 版本
+
+      - name: Install dependencies
+        run: |
+          gem install jekyll -v 4.3.2 # 安装你需要的 Jekyll 版本
+          gem install bundler
+          bundle install
+
+      - name: Build the site with Jekyll
+        run: bundle exec jekyll build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_branch: gh-pages # 部署的分支，通常是 gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
