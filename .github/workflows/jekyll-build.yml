@@ -1,15 +1,15 @@
-name: Jekyll Build
+name: Jekyll Build and Deploy
 
 on:
   push:
     branches:
-      - main
+      - main  # 监听主分支的推送事件
   pull_request:
     branches:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,15 +23,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          gem install jekyll -v 4.3.2 # 安装你需要的 Jekyll 版本
           gem install bundler
-          bundle install
+          bundle install  # 使用 Gemfile 安装依赖
 
       - name: Build the site with Jekyll
-        run: bundle exec jekyll build
+        run: |
+          bundle exec jekyll build  # 使用你指定的 Jekyll 版本构建网站
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_branch: gh-pages # 部署的分支，通常是 gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub token 进行身份验证
+          deploy_branch: gh-pages  # 将构建好的文件部署到 gh-pages 分支
