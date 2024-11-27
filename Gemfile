@@ -10,5 +10,3 @@ end
 
 gem 'asciidoctor', '~> 1.5.4'
 gem 'coderay', '1.1.1'
-
-gem 'jekyll-sass-converter', '>= 2.0', '< 4.0'  # 指定 jekyll-sass-converter 的版本范围
